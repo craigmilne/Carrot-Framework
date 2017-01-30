@@ -3,11 +3,6 @@
 	/* GMT best timezone */
 	date_default_timezone_set("Etc/GMT");
 
-	function define_test($ayy) {
-		echo "called";
-		return "TEST";
-	}
-
 	/* Contants */
 	define('SITE_ROOT', 	realpath(dirname(__FILE__)));
 	define('CONFIG_ROOT', 	realpath(SITE_ROOT . "/conf"));

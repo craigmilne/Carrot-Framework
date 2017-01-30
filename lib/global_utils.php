@@ -114,4 +114,96 @@
 
 	}
 
+	/* Database management, currently you are only allowed one database. */
+	class Database {
+
+		/* Query the database and return the output */
+		public static function query($query) {
+			$conn = self::open_conn();
+			$result;
+			if (Config::db_type() == "MySQL") {
+				$result = $conn->query($query);
+			} else {
+				throw new Exception("Unsupported Database Type");
+			}
+			self::close_conn($conn);
+			return $result;
+		}
+
+		/* Basic SQL functions, recommend you use 'query' for everything anyway */
+		public static function select($cols, $table, $matches="1=1") {
+			$query = "SELECT $cols FROM $table WHERE $matches";
+			return self::query($query);
+		}
+		public static function insert_row($table, $values) {
+			$query = "INSERT INTO $table (" . implode(",", array_keys($values)) . ") VALUES(" . implode(",", $values) . ")";
+			return self::query($query);
+		}
+		public static function delete($table, $params) {
+			$query = "DELETE FROM $table WHERE $params";
+			return self::query($query);
+		}
+		public static function update($table, $set, $params) {
+			$query = "UPDATE $table SET " . http_build_query($set,'',', ') . " WHERE " . http_build_query($params,'',',');
+			return self::query($query);
+		}
+		public static function create_table($table_name, $rows) {
+			$query = "CREATE TABLE $table_name (" . implode(", ", $rows) . ")";
+			return self::query($query);
+		}
+
+		/* Same functions as above but we do sanitizing */
+		public static function query_sanitize($query) {
+			return self::query(self::sanitize($query));
+		}
+		public static function select_sanitize($cols, $table, $matches="1=1") {
+			$query = self::sanitize("SELECT $cols FROM $table WHERE $matches");
+			return self::query($query);
+		}
+		public static function insert_row_sanitize($table, $values) {
+			$query = self::sanitize("INSERT INTO $table (" . implode(",", array_keys($values)) . ") VALUES(" . implode(",", $values) . ")");
+			return self::query($query);
+		}
+		public static function delete_sanitize($table, $params) {
+			$query = self::sanitize("DELETE FROM $table WHERE $params");
+			return self::query($query);
+		}
+		public static function update_sanitize($table, $params) {
+			$query = self::sanitize("UPDATE $table SET " . http_build_query($set,'',', ') . " WHERE " . http_build_query($params,'',','));
+			return self::query($query);
+		}
+
+		/* Slightly more custom SQL stuff */
+		public static function open_conn() {
+			if (Config::db_type() == "MySQL") {
+				$db = Config::db();
+				$conn = new mysqli($db['host'], $db['user'], $db['pass'], $db['db'], $db['port']);
+				if ($conn->connect_error) {
+					throw new Exception("Failed to establish connection to database: " . $conn->connect_error);
+				}
+				// connected
+				return $conn;	// pls close it if you open it
+			} else {
+				throw new Exception("Unsupported Database Type");
+			}
+		}
+		public static function close_conn($conn) {
+			if (Config::db_type() == "MySQL") {
+				$conn->close();
+				return;
+			} else {
+				throw new Exception("Unsupported Database Type");
+			}
+		}
+
+		/* Clean a string for the database */
+		public static function sanitize($string) {
+			$string = strip_tags($string);
+		    $string = htmlentities($string);
+		    $string = stripslashes($string);
+		    return mysql_real_escape_string($string);
+		}
+
+	}
+
 ?>

@@ -52,6 +52,14 @@
 
 		}
 
+		/* Gets all of the routes, if you need them */
+		public static function allRoutes() {
+			$routes = [];
+			$routes['get'] = self::$get;
+			$routes['post'] = self::$post;
+			return $routes;
+		}
+
 
 	}
 

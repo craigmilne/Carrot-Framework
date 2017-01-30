@@ -8,7 +8,7 @@
 		/* Database configuration */
 		private static $db = [
 			'host' => 'localhost',
-			'port' => '3306',
+			'port' =>  3306,
 			'user' => 'username',
 			'pass' => 'password',
 			'db'   => 'database'
