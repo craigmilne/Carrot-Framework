@@ -12,7 +12,7 @@ You'll also want to point all of your incoming connections to the `index.php` fi
 
 ####Nginx
 
-Plop this in your server block if your are using Nginx and PHP-FPM, along with whatever else you might need:
+Plop this in your server block if you are using Nginx and PHP-FPM, along with whatever else you might need:
 
 ```
 location / {
