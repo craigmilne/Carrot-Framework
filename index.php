@@ -8,7 +8,7 @@
 	define('CONFIG_ROOT', 	realpath(SITE_ROOT . "/conf"));
 	define('APP_ROOT', 		realpath(SITE_ROOT . "/app"));
 	define('LIB_ROOT',		realpath(SITE_ROOT . "/lib"));
-	define('VERSION', 		"v0.0.1");
+	define('VERSION', 		"v0.0.2");
 	define('F_SEP', DIRECTORY_SEPARATOR);
 
 	/* Handle the request */
