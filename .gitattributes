@@ -1,3 +1,5 @@
+# Default Windows .gitattributes (since I used Windows for dev)
+
 # Auto detect text files and perform LF normalization
 * text=auto
 
