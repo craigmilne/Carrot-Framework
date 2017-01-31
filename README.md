@@ -2,6 +2,8 @@
 
 A super-duper lightweight PHP MVC-type framework.
 
+![I made a carrot lel](/app/content/img/carrot.png)
+
 ##Setup
 
 The `master` branch will always be the one to download, I'll possibly be playing about with new things or whatnot in other branches if you're feeling adventurous though.
