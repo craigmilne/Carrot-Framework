@@ -12,7 +12,7 @@
 	define('F_SEP', DIRECTORY_SEPARATOR);
 
 	/* Handle the request */
-	$request = trim($_SERVER['REQUEST_URI'], '/');
+	$request = trim(strtok($_SERVER["REQUEST_URI"],'?'), '/');
 
 	require (CONFIG_ROOT . F_SEP . "/app.conf.php");
 	require (CONFIG_ROOT . F_SEP . "/routing.conf.php");
